@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-
-public class SparkSQLJavaTest implements Serializable{
+public class SparkSQLJavaTest implements Serializable {
     @Test
-    public void sparkSQL(){
+    public void sparkSQL() {
         SparkConf conf = new SparkConf().setAppName("HelloWorld").setMaster("local");
 
         JavaSparkContext sc = new JavaSparkContext(conf);
@@ -58,7 +57,6 @@ public class SparkSQLJavaTest implements Serializable{
          * 第三步：基于已有的元数据以及RDD<Row>来构造DataFrame
          */
         DataFrame personsDF = sqlContext.createDataFrame(personsRDD, structType);
-
         /**
          * 第四步：将数据写入到person表中
          */
@@ -66,25 +64,26 @@ public class SparkSQLJavaTest implements Serializable{
 
         sc.close();
     }
+
     /**
-     *
+     * @param []
+     * @return void
      * @desc 读取数据
      * @author 大水怪
      * @date 2019/1/8 下午 10:40
-     * @param []
-     * @return void
      */
     @Test
-    public void getgetTagByDay(){
+    public void getgetTagByDay() {
         SparkConf conf = new SparkConf().setAppName("HelloWorld").setMaster("local");
         JavaSparkContext sc = new JavaSparkContext(conf);
         SQLContext sqlContext = new SQLContext(sc);
         getTagByDay(sqlContext);
     }
+
     public void getTagByDay(SQLContext sqlContext) {
-        String url = "jdbc:mysql://127.0.0.1:3306/test";
+        String url = "jdbc:mysql://localhost:3306/test";
         //查找的表名
-        String table = "person";
+        String table = "av";
         //增加数据库的用户名(user)密码(password),指定test数据库的驱动(driver)
         Properties connectionProperties = new Properties();
         connectionProperties.put("user", "root");
@@ -96,10 +95,39 @@ public class SparkSQLJavaTest implements Serializable{
 
         // 读取表中所有数据
         sqlContext.read().jdbc(url, table, connectionProperties);
-        DataFrame jd = sqlContext.sql("SELECT * FROM person  ");
+        DataFrame jd = sqlContext.sql("SELECT * FROM av  ");
         //显示数据
         jd.show();
 
+    }
+
+    public void main(String[] args) {
+        JavaSparkContext sparkContext = new JavaSparkContext(new SparkConf().setAppName("SparkMysql").setMaster("local[5]"));
+        SQLContext sqlContext = new SQLContext(sparkContext);
+        //读取mysql数据
+        readMySQL(sqlContext);
+
+        //停止SparkContext
+        sparkContext.stop();
+    }
+
+    private void readMySQL(SQLContext sqlContext) {
+        //jdbc.url=jdbc:mysql://localhost:3306/database
+        String url = "jdbc:mysql://localhost:3306/test";
+        //查找的表名
+        String table = "av";
+        //增加数据库的用户名(user)密码(password),指定test数据库的驱动(driver)
+        Properties connectionProperties = new Properties();
+        connectionProperties.put("user", "root");
+        connectionProperties.put("password", "root");
+        connectionProperties.put("driver", "com.mysql.jdbc.Driver");
+
+        //SparkJdbc读取Postgresql的products表内容
+        System.out.println("读取test数据库中表内容");
+        // 读取表中所有数据
+        DataFrame jdbcDF = sqlContext.read().jdbc(url, table, connectionProperties).select("*");
+        //显示数据
+        jdbcDF.show();
     }
 
 }
