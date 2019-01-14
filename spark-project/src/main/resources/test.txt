@@ -1,0 +1,5 @@
+1,king,16
+2,jack,45
+2,jack,45
+3,wang,90
+3,wang,90
