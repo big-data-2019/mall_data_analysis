@@ -13,6 +13,7 @@ import java.util.*;
 
 public class RDDJavaTest2 implements Serializable {
     public static String dir = "src/main/resources";
+    public static String hdfsDir = "hdfs://localhost:9000/testData";
 
     @Test
     public void map() {
@@ -40,7 +41,7 @@ public class RDDJavaTest2 implements Serializable {
     public void textFile() {
         //1,jack,20
         JavaSparkContext javaSparkContext = getJavaSparkContext();
-        JavaRDD<String> stringJavaRDD = javaSparkContext.textFile("src/main/resources/test.txt");
+        JavaRDD<String> stringJavaRDD = javaSparkContext.textFile(dir + "/test.txt");
         JavaRDD<Object> objectJavaRDD = stringJavaRDD.map(new Function<String, Object>() {
             @Override
             public Object call(String s) throws Exception {
@@ -110,7 +111,8 @@ public class RDDJavaTest2 implements Serializable {
     @Test
     public void saveAsTextFile() {
         JavaRDD<Object> objectJavaRDD = getObjectJavaRDDData();
-        objectJavaRDD.saveAsTextFile("hdfs://localhost:9000/testData/testRdd");
+
+        objectJavaRDD.saveAsTextFile(hdfsDir + "/testRdd");
 
     }
 
@@ -120,17 +122,19 @@ public class RDDJavaTest2 implements Serializable {
         Map<String, Object> map = pairRDD.countByKey();
         printMap(map);
     }
+
     @Test
     public void reduce() {
         JavaRDD<Object> objectJavaRDDData = getObjectJavaRDDData();
         Object reduce = objectJavaRDDData.reduce(new Function2<Object, Object, Object>() {
             @Override
             public Object call(Object o, Object o2) throws Exception {
-                return o.toString()+o2;
+                return o.toString() + o2;
             }
         });
         System.out.println("reduce = " + reduce);
     }
+
     @Test
     public void reduceByKey() {
         JavaPairRDD<String, Integer> pairRDD = getStringIntegerJavaPairRDDData();
@@ -142,8 +146,6 @@ public class RDDJavaTest2 implements Serializable {
         });
         printRdd(reduceByKey);
     }
-
-
 
 
     //工具
@@ -158,9 +160,9 @@ public class RDDJavaTest2 implements Serializable {
     }
 
     //得到测试 RDD
-    public JavaRDD<Object> getObjectJavaRDDData() {
+    public JavaRDD<Object> getObjectJavaRDDData(String path) {
         JavaSparkContext javaSparkContext = getJavaSparkContext();
-        JavaRDD<String> stringJavaRDD = javaSparkContext.textFile(dir + "/test.txt");
+        JavaRDD<String> stringJavaRDD = javaSparkContext.textFile(path);
         return stringJavaRDD.flatMap(new FlatMapFunction<String, Object>() {
             @Override
             public Iterable<Object> call(String s) throws Exception {
@@ -168,6 +170,11 @@ public class RDDJavaTest2 implements Serializable {
                 return strings;
             }
         });
+    }
+
+    //得到测试 RDD
+    public JavaRDD<Object> getObjectJavaRDDData() {
+        return getObjectJavaRDDData(dir + "/test.txt");
     }
 
     public JavaSparkContext getJavaSparkContext() {
@@ -240,10 +247,11 @@ public class RDDJavaTest2 implements Serializable {
             }
         });
     }
-    public void printMap(Map map){
-        Set<Map.Entry<Object,Object>> sets = map.entrySet();
-        for(Map.Entry<Object,Object> kv: sets){
-            System.out.println(kv.getKey()+"="+kv.getValue());
+
+    public void printMap(Map map) {
+        Set<Map.Entry<Object, Object>> sets = map.entrySet();
+        for (Map.Entry<Object, Object> kv : sets) {
+            System.out.println(kv.getKey() + "=" + kv.getValue());
         }
     }
 }

@@ -1,0 +1,129 @@
+package com.ibeifeng.sparkproject.spark.test;
+
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.Function;
+import org.apache.spark.api.java.function.Function2;
+import org.apache.spark.api.java.function.PairFunction;
+import org.junit.Test;
+import scala.Tuple2;
+
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.List;
+
+public class AppUserSpark implements Serializable {
+    public static String dir = "src/main/resources";
+
+    //计算注册人数
+    @Test
+    public void registerCount() {
+        long count = getRegisterCount();
+        System.out.println("注册总人数 = " + count);
+    }
+
+    //计算非公共账号 占比
+    @Test
+    public void noPublicAppUser() {
+        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
+        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
+        long count = textFile.count();
+        System.out.println("注册总人数 = " + count);
+        //得到数组
+        JavaRDD<String[]> stringsRdd = textFile.map(new Function<String, String[]>() {
+            @Override
+            public String[] call(String s) throws Exception {
+                return s.split(",");
+            }
+        });
+        //得到不是公共账号的个数
+        JavaRDD<String[]> noPublicRdd = stringsRdd.filter(new Function<String[], Boolean>() {
+            @Override
+            public Boolean call(String[] strings) throws Exception {
+                String string = strings[16];
+                return string.equals("\"noPublic\"");
+            }
+        });
+        long count1 = noPublicRdd.count();
+        System.out.println("noPublic = " + count1);
+        //所占比例
+        System.out.println(count1 + "/" + count + " === 所占百分比 " + String.format("%.2f", (count1 / Double.parseDouble(count + "")) * 100) + "%");
+    }
+
+    //计算各个 消费过的用户
+    @Test
+    public void payNum() {
+        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
+        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
+        long count = textFile.count();
+        System.out.println("注册总人数 = " + count);
+        //得到数组
+        JavaRDD<String[]> stringsRdd = textFile.map(new Function<String, String[]>() {
+            @Override
+            public String[] call(String s) throws Exception {
+                return s.split(",");
+            }
+        });
+        JavaPairRDD<String, Integer> mapToPair = stringsRdd.mapToPair(new PairFunction<String[], String, Integer>() {
+            @Override
+            public Tuple2<String, Integer> call(String[] strings) throws Exception {
+                return new Tuple2<>(strings[15],1);
+            }
+        });
+        //计算各个支付次数
+        JavaPairRDD<String, Integer> reduceByKey = mapToPair.reduceByKey(new Function2<Integer, Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer, Integer integer2) throws Exception {
+                return integer + integer2;
+            }
+        });
+        //类排序
+        JavaPairRDD<String, Integer> sortByKey = reduceByKey.sortByKey(new PayNumSort());
+         SparkUtil.printRddToArray(sortByKey);
+        //根据KEY 一次排序 交换位置
+        JavaPairRDD<Integer, String> mapToPair1 = reduceByKey.mapToPair(new PairFunction<Tuple2<String, Integer>, Integer, String>() {
+            @Override
+            public Tuple2<Integer, String> call(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
+                return new Tuple2<>(stringIntegerTuple2._2, stringIntegerTuple2._1);
+            }
+        });
+        JavaPairRDD<Integer, String> sortByKey1 = mapToPair1.sortByKey();
+        SparkUtil.printRddToArray(sortByKey1);
+    }
+    //计算微信使用用户
+    @Test
+    public void weixinUser(){
+        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
+        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
+        long count = textFile.count();
+        System.out.println("注册总人数 = " + count);
+        //得到数组
+        JavaRDD<String[]> stringsRdd = textFile.map(new Function<String, String[]>() {
+            @Override
+            public String[] call(String s) throws Exception {
+                return s.split(",");
+            }
+        });
+        //得到不是公共账号的个数
+        JavaRDD<String[]> noPublicRdd = stringsRdd.filter(new Function<String[], Boolean>() {
+            @Override
+            public Boolean call(String[] strings) throws Exception {
+                String string = strings[13];
+                return !"\"\"".equals(string);
+            }
+        });
+        long count1 = noPublicRdd.count();
+        System.out.println("weixin = " + count1);
+        //所占比例
+        System.out.println(count1 + "/" + count + " === 所占百分比 " + String.format("%.2f", (count1 / Double.parseDouble(count + "")) * 100) + "%");
+
+    }
+
+    //注册人数
+    private long getRegisterCount() {
+        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
+        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
+        return textFile.count();
+    }
+}
