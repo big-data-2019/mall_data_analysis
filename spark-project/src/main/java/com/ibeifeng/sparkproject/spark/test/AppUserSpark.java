@@ -10,9 +10,7 @@ import org.junit.Test;
 import scala.Tuple2;
 
 import java.io.Serializable;
-import java.util.Comparator;
-import java.util.List;
-
+//"83","2016/8/29 18:28:19","1","","2019/1/7 16:38:50","/headPortrait/83/d833c895d143ad4bd74bac3f85025aafa50f06e3.jpg","","冲哥哥","4PHwE7hpihMXTtWJTlLayPIXghBn7LFEt6yRRJ/Qh13NPLTgSnmxfrMxnq5P5CBZud6WBd8Skd7t4B/TaMgMEw==","1","ee307b42ced04b37b1679149ec9bffcf","2731","84","","07591432","45","formal","21","",""
 public class AppUserSpark implements Serializable {
     public static String dir = "src/main/resources";
 
