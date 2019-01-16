@@ -60,6 +60,7 @@ public class SparkSQLJavaTest implements Serializable {
         /**
          * 第四步：将数据写入到person表中
          */
+
         personsDF.write().mode("append").jdbc(url, "person", connectionProperties);
 
         sc.close();

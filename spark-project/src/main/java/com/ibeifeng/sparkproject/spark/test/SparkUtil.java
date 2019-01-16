@@ -9,10 +9,8 @@ import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.api.java.function.VoidFunction;
 import scala.Tuple2;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class SparkUtil {
     public static String dir = "src/main/resources";
@@ -142,11 +140,32 @@ public class SparkUtil {
         }
     }
 
-    private static void printArray(Object[] objects) {
+    public static void printArray(Object[] objects) {
         for (int i = 0; i < objects.length; i++) {
             Object object = objects[i];
             System.out.println("object = " + object);
         }
     }
 
+    public static String percentage(Number child, Number parent) {
+       return String.format("%.2f",(child.doubleValue()/parent.doubleValue())*100)+"%";
+    }
+    public static String percentage(String child, String parent) {
+       return percentage(new BigDecimal(Double.parseDouble(child)),new BigDecimal(Double.parseDouble(parent)));
+    }
+
+    public static void printList(List take) {
+        for (int i = 0; i < take.size(); i++) {
+            Object o =  take.get(i);
+            if(o instanceof List){
+                printList((List)o);
+            }else{
+                System.out.println(o);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+    }
 }

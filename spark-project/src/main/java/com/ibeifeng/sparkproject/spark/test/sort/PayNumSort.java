@@ -1,4 +1,4 @@
-package com.ibeifeng.sparkproject.spark.test;
+package com.ibeifeng.sparkproject.spark.test.sort;
 
 import java.io.Serializable;
 import java.util.Comparator;

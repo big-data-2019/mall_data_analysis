@@ -1,5 +1,6 @@
 package com.ibeifeng.sparkproject.spark.test;
 
+import com.ibeifeng.sparkproject.spark.test.sort.PayNumSort;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -17,15 +18,15 @@ public class AppUserSpark implements Serializable {
     //计算注册人数
     @Test
     public void registerCount() {
-        long count = getRegisterCount();
+        JavaRDD<String> textFile = getAppUserRDD();
+        long count = textFile.count();
         System.out.println("注册总人数 = " + count);
     }
 
     //计算非公共账号 占比
     @Test
     public void noPublicAppUser() {
-        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
-        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
+        JavaRDD<String> textFile = getAppUserRDD();
         long count = textFile.count();
         System.out.println("注册总人数 = " + count);
         //得到数组
@@ -52,8 +53,7 @@ public class AppUserSpark implements Serializable {
     //计算各个 消费过的用户
     @Test
     public void payNum() {
-        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
-        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
+        JavaRDD<String> textFile = getAppUserRDD();
         long count = textFile.count();
         System.out.println("注册总人数 = " + count);
         //得到数组
@@ -92,8 +92,7 @@ public class AppUserSpark implements Serializable {
     //计算微信使用用户
     @Test
     public void weixinUser(){
-        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
-        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
+        JavaRDD<String> textFile = getAppUserRDD();
         long count = textFile.count();
         System.out.println("注册总人数 = " + count);
         //得到数组
@@ -118,10 +117,9 @@ public class AppUserSpark implements Serializable {
 
     }
 
-    //注册人数
-    private long getRegisterCount() {
+    private JavaRDD<String> getAppUserRDD() {
         JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
-        JavaRDD<String> textFile = javaSparkContext.textFile(dir + "/app_user.csv");
-        return textFile.count();
+        return javaSparkContext.textFile(dir + "/app_user.csv");
     }
+
 }
