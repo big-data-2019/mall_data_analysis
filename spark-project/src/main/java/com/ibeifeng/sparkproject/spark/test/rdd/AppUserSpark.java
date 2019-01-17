@@ -1,9 +1,9 @@
-package com.ibeifeng.sparkproject.spark.test;
+package com.ibeifeng.sparkproject.spark.test.rdd;
 
 import com.ibeifeng.sparkproject.spark.test.sort.PayNumSort;
+import com.ibeifeng.sparkproject.spark.test.utils.SparkUtil;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
@@ -14,11 +14,11 @@ import java.io.Serializable;
 //"83","2016/8/29 18:28:19","1","","2019/1/7 16:38:50","/headPortrait/83/d833c895d143ad4bd74bac3f85025aafa50f06e3.jpg","","冲哥哥","4PHwE7hpihMXTtWJTlLayPIXghBn7LFEt6yRRJ/Qh13NPLTgSnmxfrMxnq5P5CBZud6WBd8Skd7t4B/TaMgMEw==","1","ee307b42ced04b37b1679149ec9bffcf","2731","84","","07591432","45","formal","21","",""
 public class AppUserSpark implements Serializable {
     public static String dir = "src/main/resources";
+    public static JavaRDD<String> textFile = SparkUtil.gettextFileData(dir + "/app_user.csv");
 
     //计算注册人数
     @Test
     public void registerCount() {
-        JavaRDD<String> textFile = getAppUserRDD();
         long count = textFile.count();
         System.out.println("注册总人数 = " + count);
     }
@@ -26,7 +26,6 @@ public class AppUserSpark implements Serializable {
     //计算非公共账号 占比
     @Test
     public void noPublicAppUser() {
-        JavaRDD<String> textFile = getAppUserRDD();
         long count = textFile.count();
         System.out.println("注册总人数 = " + count);
         //得到数组
@@ -41,7 +40,7 @@ public class AppUserSpark implements Serializable {
             @Override
             public Boolean call(String[] strings) throws Exception {
                 String string = strings[16];
-                return string.equals("\"noPublic\"");
+                return string.equals("noPublic");
             }
         });
         long count1 = noPublicRdd.count();
@@ -53,7 +52,6 @@ public class AppUserSpark implements Serializable {
     //计算各个 消费过的用户
     @Test
     public void payNum() {
-        JavaRDD<String> textFile = getAppUserRDD();
         long count = textFile.count();
         System.out.println("注册总人数 = " + count);
         //得到数组
@@ -92,7 +90,6 @@ public class AppUserSpark implements Serializable {
     //计算微信使用用户
     @Test
     public void weixinUser(){
-        JavaRDD<String> textFile = getAppUserRDD();
         long count = textFile.count();
         System.out.println("注册总人数 = " + count);
         //得到数组
@@ -107,19 +104,12 @@ public class AppUserSpark implements Serializable {
             @Override
             public Boolean call(String[] strings) throws Exception {
                 String string = strings[13];
-                return !"\"\"".equals(string);
+                return !"".equals(string);
             }
         });
         long count1 = noPublicRdd.count();
         System.out.println("weixin = " + count1);
         //所占比例
         System.out.println(count1 + "/" + count + " === 所占百分比 " + String.format("%.2f", (count1 / Double.parseDouble(count + "")) * 100) + "%");
-
     }
-
-    private JavaRDD<String> getAppUserRDD() {
-        JavaSparkContext javaSparkContext = SparkUtil.getJavaSparkContext();
-        return javaSparkContext.textFile(dir + "/app_user.csv");
-    }
-
 }

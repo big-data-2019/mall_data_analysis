@@ -1,18 +1,23 @@
-package com.ibeifeng.sparkproject.spark.test;
+package com.ibeifeng.sparkproject.spark.test.utils;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
+import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.api.java.function.VoidFunction;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
 import scala.Tuple2;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SparkUtil {
     public static String dir = "src/main/resources";
@@ -65,7 +70,10 @@ public class SparkUtil {
 
     //得到textfile RDD
     public static JavaRDD<String> gettextFileData(String path) {
-        return SparkUtil.getJavaSparkContext().textFile(path);
+        return gettextFileData(SparkUtil.getJavaSparkContext(),path);
+    }
+    public static JavaRDD<String> gettextFileData(JavaSparkContext javaSparkContext,String path) {
+        return javaSparkContext.textFile(path);
     }
 
     public static void printRddToArray(JavaRDD javaRDD) {
@@ -177,6 +185,16 @@ public class SparkUtil {
                 System.out.println(o);
             }
         }
+    }
+
+    public static JavaRDD<Row> stringRddToRowRdd(JavaRDD<String> stringRdd) {
+        return stringRdd.map(new Function<String, Row>() {
+            @Override
+            public Row call(String s) throws Exception {
+                String[] splited = s.split(",");
+                return RowFactory.create(splited);
+            }
+        });
     }
 
     public static void main(String[] args) throws Exception {

@@ -1,35 +1,35 @@
-package com.ibeifeng.sparkproject.spark.test;
+package com.ibeifeng.sparkproject.spark.test.rdd;
 
+import com.ibeifeng.sparkproject.spark.test.utils.SparkUtil;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.sql.sources.In;
 import org.junit.Test;
 import scala.Tuple2;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
 //"902","2016/8/31 14:42:05","1","","2016/8/31 15:06:58","2016-08-31-eb407b88-91da-4c2d-8322-347a319dccb0","5","1","成都昭觉寺","114.00"," ","TSPAY201608310002","18782161806",""," ","TS201608310002","2016/8/31 15:30:00","广元南河","topay","","其它","85","0.00","0.00","","","","","","","","","","119.00","ordinary","","2.00","","","114.00","3.00","1","","","","",""
 public class TicketSellingSpark implements Serializable {
     public static String dir = "src/main/resources";
     public static FastDateFormat fdf = FastDateFormat.getInstance("yyyy/MM/dd HH:mm:ss");
+    public static JavaRDD<String> textfile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
+    ;
 
     //买票总张数
     @Test
     public void count() {
-        JavaRDD<String> textFile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
-        long count1 = textFile.count();
-        JavaRDD<String> javaRDD = textFile.filter(new Function<String, Boolean>() {
+        long count1 = textfile.count();
+        JavaRDD<String> javaRDD = textfile.filter(new Function<String, Boolean>() {
             @Override
             public Boolean call(String v1) throws Exception {
                 String[] strings = v1.split(",");
-                return strings[18].equalsIgnoreCase("\"ispay\"");
+                return strings[18].equalsIgnoreCase("ispay");
             }
         });
         long count = javaRDD.count();
@@ -41,21 +41,20 @@ public class TicketSellingSpark implements Serializable {
     //付款未付款待付款所占比例
     @Test
     public void reduceByKey() {
-        JavaRDD<String> textFile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
-        long count1 = textFile.count();
-        JavaRDD<String> javaRDD = textFile.filter(new Function<String, Boolean>() {
+        long count1 = textfile.count();
+        JavaRDD<String> javaRDD = textfile.filter(new Function<String, Boolean>() {
             @Override
             public Boolean call(String v1) throws Exception {
                 String[] strings = v1.split(",");
-                return strings[18].equalsIgnoreCase("\"ispay\"");
+                return strings[18].equalsIgnoreCase("ispay");
             }
         });
         long count = javaRDD.count();
-        JavaRDD<String> javaRDD1 = textFile.filter(new Function<String, Boolean>() {
+        JavaRDD<String> javaRDD1 = textfile.filter(new Function<String, Boolean>() {
             @Override
             public Boolean call(String v1) throws Exception {
                 String[] strings = v1.split(",");
-                return strings[18].equalsIgnoreCase("\"topay\"");
+                return strings[18].equalsIgnoreCase("topay");
             }
         });
         long count2 = javaRDD1.count();
@@ -70,7 +69,6 @@ public class TicketSellingSpark implements Serializable {
     //到哪儿的人最多
     @Test
     public void startSiteName() {
-        JavaRDD<String> textfile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
         JavaPairRDD<Tuple2<String, String>, Integer> mapToPair = textfile.mapToPair(new PairFunction<String, Tuple2<String, String>, Integer>() {
             @Override
             public Tuple2<Tuple2<String, String>, Integer> call(String s) throws Exception {
@@ -102,7 +100,6 @@ public class TicketSellingSpark implements Serializable {
     //车型计数
     @Test
     public void carModel() {
-        JavaRDD<String> textfile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
         JavaPairRDD<String, Integer> mapToPair = textfile.mapToPair(new PairFunction<String, String, Integer>() {
             @Override
             public Tuple2<String, Integer> call(String s) throws Exception {
@@ -141,7 +138,6 @@ public class TicketSellingSpark implements Serializable {
     //总金额
     @Test
     public void money() {
-        JavaRDD<String> textfile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
         JavaRDD<Double> javaRDD = textfile.map(new Function<String, Double>() {
             @Override
             public Double call(String v1) throws Exception {
@@ -151,7 +147,7 @@ public class TicketSellingSpark implements Serializable {
                     String s = strings[9].replaceAll("\"", "").replaceAll(" ", "");
                     parseDouble = Double.parseDouble(s);
                 } catch (Exception e) {
-                    System.out.println("错误的参数: "+strings[9]);
+                    System.out.println("错误的参数: " + strings[9]);
                 }
                 return parseDouble;
             }
@@ -164,10 +160,10 @@ public class TicketSellingSpark implements Serializable {
         });
         System.out.println("money = " + money);
     }
+
     //平均票价
     @Test
     public void avgMoney() {
-        JavaRDD<String> textfile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
         JavaRDD<Double> javaRDD = textfile.map(new Function<String, Double>() {
             @Override
             public Double call(String v1) throws Exception {
@@ -177,7 +173,7 @@ public class TicketSellingSpark implements Serializable {
                     String s = strings[9].replaceAll("\"", "").replaceAll(" ", "");
                     parseDouble = Double.parseDouble(s);
                 } catch (Exception e) {
-                    System.out.println("错误的参数: "+strings[9]);
+                    System.out.println("错误的参数: " + strings[9]);
                 }
                 return parseDouble;
             }
@@ -193,17 +189,15 @@ public class TicketSellingSpark implements Serializable {
             @Override
             public Boolean call(String v1) throws Exception {
                 String[] strings = v1.split(",");
-                return !strings[9].equals("\"0.00\"");
+                return !strings[9].equals("0.00");
             }
         }).count();
         System.out.println("count = " + count);
-        System.out.println("平均票价: "+(money/count));
+        System.out.println("平均票价: " + (money / count));
     }
 
 
-
     public Long countByDate(final String end, final String start) {
-        JavaRDD<String> textfile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
         JavaRDD<String> filter = textfile.filter(new Function<String, Boolean>() {
             @Override
             public Boolean call(String v1) throws Exception {

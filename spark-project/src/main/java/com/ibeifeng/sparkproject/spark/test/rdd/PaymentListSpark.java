@@ -1,5 +1,6 @@
-package com.ibeifeng.sparkproject.spark.test;
+package com.ibeifeng.sparkproject.spark.test.rdd;
 
+import com.ibeifeng.sparkproject.spark.test.utils.SparkUtil;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -10,7 +11,6 @@ import org.junit.Test;
 import scala.Tuple2;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +18,11 @@ import java.util.Map;
 public class PaymentListSpark implements Serializable {
     public static String dir = "src/main/resources";
     public static FastDateFormat fdf = FastDateFormat.getInstance("yyyy/MM/dd HH:mm:ss");
+    public static JavaRDD<String> textFileData = SparkUtil.gettextFileData(dir + "/payment_list.csv");
 
     //总记录数
     @Test
     public void count() {
-        JavaRDD<String> textFileData = SparkUtil.gettextFileData(dir + "/payment_list.csv");
         long count = textFileData.count();
         System.out.println("count = " + count);
     }
@@ -30,7 +30,6 @@ public class PaymentListSpark implements Serializable {
     //钱
     @Test
     public void money() {
-        JavaRDD<String> textFileData = SparkUtil.gettextFileData(dir + "/payment_list.csv");
         JavaRDD<Double> map = textFileData.map(new Function<String, Double>() {
             @Override
             public Double call(String v1) throws Exception {
@@ -50,7 +49,7 @@ public class PaymentListSpark implements Serializable {
             @Override
             public Boolean call(String v1) throws Exception {
                 String[] strings = v1.split(",");
-                boolean nul = strings[9].equals("\"\001\"");
+                boolean nul = strings[9].equals("\001");
                 return nul;
             }
         });
@@ -75,7 +74,6 @@ public class PaymentListSpark implements Serializable {
     //支付类型途径占比
     @Test
     public void payType() {
-        JavaRDD<String> textFileData = SparkUtil.gettextFileData(dir + "/payment_list.csv");
         final JavaPairRDD<String, Integer> stringIntegerJavaPairRDD = textFileData.mapToPair(new PairFunction<String, String, Integer>() {
 
             @Override
@@ -117,7 +115,6 @@ public class PaymentListSpark implements Serializable {
     //支付类型占比
     @Test
     public void orderType() {
-        JavaRDD<String> textFileData = SparkUtil.gettextFileData(dir + "/payment_list.csv");
         final JavaPairRDD<String, Integer> stringIntegerJavaPairRDD = textFileData.mapToPair(new PairFunction<String, String, Integer>() {
 
             @Override

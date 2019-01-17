@@ -1,4 +1,4 @@
-package com.ibeifeng.sparkproject.spark.test;
+package com.ibeifeng.sparkproject.spark.test.test;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;

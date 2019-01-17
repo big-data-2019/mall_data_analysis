@@ -1,4 +1,4 @@
-package com.ibeifeng.sparkproject.spark.test;
+package com.ibeifeng.sparkproject.spark.test.test;
 
 import com.ibeifeng.sparkproject.spark.test.pojo.Language;
 import org.apache.spark.SparkConf;
@@ -59,6 +59,7 @@ public class DataFrameJavaTest implements Serializable {
          */
         personsDF.registerTempTable("language");
         DataFrame sqlDF = sqlContext.sql("select * from language");
+        sqlDF.show();
         JavaRDD<Row> rowJavaRDD = sqlDF.javaRDD();
         final List<Language> languages = new ArrayList<>();
         JavaRDD<Language> languageJavaRDD = rowJavaRDD.map(new Function<Row, Language>() {
