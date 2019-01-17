@@ -9,6 +9,8 @@ import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.api.java.function.VoidFunction;
 import scala.Tuple2;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -59,6 +61,11 @@ public class SparkUtil {
         SparkConf conf = new SparkConf().setAppName(appName).setMaster(master);
         //创建JavasparkContext
         return new JavaSparkContext(conf);
+    }
+
+    //得到textfile RDD
+    public static JavaRDD<String> gettextFileData(String path) {
+        return SparkUtil.getJavaSparkContext().textFile(path);
     }
 
     public static void printRddToArray(JavaRDD javaRDD) {
@@ -141,31 +148,46 @@ public class SparkUtil {
     }
 
     public static void printArray(Object[] objects) {
+        System.out.print("[");
         for (int i = 0; i < objects.length; i++) {
             Object object = objects[i];
-            System.out.println("object = " + object);
+            System.out.print(object);
+            if (objects.length - 1 != i) {
+                System.out.print(",");
+            }
         }
+        System.out.print("]");
+        System.out.println();
     }
 
     public static String percentage(Number child, Number parent) {
-       return String.format("%.2f",(child.doubleValue()/parent.doubleValue())*100)+"%";
+        return String.format("%.2f", (child.doubleValue() / parent.doubleValue()) * 100) + "%";
     }
+
     public static String percentage(String child, String parent) {
-       return percentage(new BigDecimal(Double.parseDouble(child)),new BigDecimal(Double.parseDouble(parent)));
+        return percentage(new BigDecimal(Double.parseDouble(child)), new BigDecimal(Double.parseDouble(parent)));
     }
 
     public static void printList(List take) {
         for (int i = 0; i < take.size(); i++) {
-            Object o =  take.get(i);
-            if(o instanceof List){
-                printList((List)o);
-            }else{
+            Object o = take.get(i);
+            if (o instanceof List) {
+                printList((List) o);
+            } else {
                 System.out.println(o);
             }
         }
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        String a = "a";
+        String b = "b";
+        String c = "c";
+        String d = "d";
+        StringBuffer sb = new StringBuffer();
+        sb.append(a).append("\001").append(b).append("\001").append(c).append("\001").append(d);
+        FileWriter fileWriter = new FileWriter("C:\\Users\\Administrator\\Desktop\\test.txt");
+        fileWriter.write(sb.toString());
+        fileWriter.flush();
     }
 }
