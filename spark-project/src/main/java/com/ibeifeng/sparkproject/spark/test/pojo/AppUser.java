@@ -1,6 +1,8 @@
 package com.ibeifeng.sparkproject.spark.test.pojo;
 
-public class AppUser {
+import java.io.Serializable;
+
+public class AppUser implements Serializable {
 
   private String id;
   private String createTime;

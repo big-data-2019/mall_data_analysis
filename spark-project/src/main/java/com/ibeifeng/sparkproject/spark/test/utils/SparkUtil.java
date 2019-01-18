@@ -1,5 +1,6 @@
 package com.ibeifeng.sparkproject.spark.test.utils;
 
+import com.ibeifeng.sparkproject.spark.test.pojo.AppUser;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -186,13 +187,24 @@ public class SparkUtil {
             }
         }
     }
-
+    //全部用字符串
     public static JavaRDD<Row> stringRddToRowRdd(JavaRDD<String> stringRdd) {
         return stringRdd.map(new Function<String, Row>() {
             @Override
             public Row call(String s) throws Exception {
                 String[] splited = s.split(",");
                 return RowFactory.create(splited);
+            }
+        });
+    }
+    //分类型
+    public static JavaRDD<Row> rddToRowRdd(JavaRDD<String> stringRdd, final Class clazz) {
+        return stringRdd.map(new Function<String, Row>() {
+            @Override
+            public Row call(String s) throws Exception {
+                String[] splited = s.split(",");
+                Object[] rowArrByClazz = CommonUtil.getRowArrByClazz(splited, clazz);
+                return RowFactory.create(rowArrByClazz);
             }
         });
     }

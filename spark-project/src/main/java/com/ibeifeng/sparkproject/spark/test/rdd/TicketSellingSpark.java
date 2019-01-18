@@ -19,7 +19,7 @@ public class TicketSellingSpark implements Serializable {
     public static String dir = "src/main/resources";
     public static FastDateFormat fdf = FastDateFormat.getInstance("yyyy/MM/dd HH:mm:ss");
     public static JavaRDD<String> textfile = SparkUtil.gettextFileData(dir + "/ticket_selling.csv");
-    ;
+
 
     //买票总张数
     @Test
