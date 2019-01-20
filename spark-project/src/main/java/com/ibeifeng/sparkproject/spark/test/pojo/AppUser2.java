@@ -2,9 +2,9 @@ package com.ibeifeng.sparkproject.spark.test.pojo;
 
 public class AppUser2 {
 
-  private Long id;
+  private long id;
   private java.sql.Timestamp createTime;
-  private Long isDelete;
+  private long isDelete;
   private String remark;
   private java.sql.Timestamp updateTime;
   private String headPortrait;
@@ -13,15 +13,15 @@ public class AppUser2 {
   private String rongyunToken;
   private String sex;
   private String token;
-  private Long baseUserId;
-  private Long userIntegral;
+  private long baseUserId;
+  private long userIntegral;
   private String weixinOpenId;
   private String recommendCode;
-  private Long payNum;
+  private long payNum;
   private String status;
-  private Long companyId;
+  private long companyId;
   private String inviteCode;
-  private Long busIntegralId;
+  private long busIntegralId;
 
     @Override
     public String toString() {
@@ -49,11 +49,11 @@ public class AppUser2 {
                 '}';
     }
 
-    public Long getId() {
+    public long getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(long id) {
     this.id = id;
   }
 
@@ -67,11 +67,11 @@ public class AppUser2 {
   }
 
 
-  public Long getIsDelete() {
+  public long getIsDelete() {
     return isDelete;
   }
 
-  public void setIsDelete(Long isDelete) {
+  public void setIsDelete(long isDelete) {
     this.isDelete = isDelete;
   }
 
@@ -148,20 +148,20 @@ public class AppUser2 {
   }
 
 
-  public Long getBaseUserId() {
+  public long getBaseUserId() {
     return baseUserId;
   }
 
-  public void setBaseUserId(Long baseUserId) {
+  public void setBaseUserId(long baseUserId) {
     this.baseUserId = baseUserId;
   }
 
 
-  public Long getUserIntegral() {
+  public long getUserIntegral() {
     return userIntegral;
   }
 
-  public void setUserIntegral(Long userIntegral) {
+  public void setUserIntegral(long userIntegral) {
     this.userIntegral = userIntegral;
   }
 
@@ -184,11 +184,11 @@ public class AppUser2 {
   }
 
 
-  public Long getPayNum() {
+  public long getPayNum() {
     return payNum;
   }
 
-  public void setPayNum(Long payNum) {
+  public void setPayNum(long payNum) {
     this.payNum = payNum;
   }
 
@@ -202,11 +202,11 @@ public class AppUser2 {
   }
 
 
-  public Long getCompanyId() {
+  public long getCompanyId() {
     return companyId;
   }
 
-  public void setCompanyId(Long companyId) {
+  public void setCompanyId(long companyId) {
     this.companyId = companyId;
   }
 
@@ -220,11 +220,11 @@ public class AppUser2 {
   }
 
 
-  public Long getBusIntegralId() {
+  public long getBusIntegralId() {
     return busIntegralId;
   }
 
-  public void setBusIntegralId(Long busIntegralId) {
+  public void setBusIntegralId(long busIntegralId) {
     this.busIntegralId = busIntegralId;
   }
 

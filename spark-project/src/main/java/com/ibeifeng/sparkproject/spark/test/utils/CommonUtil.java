@@ -29,7 +29,13 @@ public class CommonUtil {
                 case "java.lang.Boolean":
                     structFields.add(DataTypes.createStructField(field.getName(), DataTypes.BooleanType, true));
                     break;
+                case "boolean":
+                    structFields.add(DataTypes.createStructField(field.getName(), DataTypes.BooleanType, true));
+                    break;
                 case "java.lang.Integer":
+                    structFields.add(DataTypes.createStructField(field.getName(), DataTypes.IntegerType, true));
+                    break;
+                case "integer":
                     structFields.add(DataTypes.createStructField(field.getName(), DataTypes.IntegerType, true));
                     break;
                 case "java.sql.Timestamp"://1.5版本时间类型只支持timestamp 时间格式 yyyy-MM-dd HH:mm:ss格式
@@ -38,7 +44,13 @@ public class CommonUtil {
                 case "java.lang.Long":
                     structFields.add(DataTypes.createStructField(field.getName(), DataTypes.LongType, true));
                     break;
+                case "long":
+                    structFields.add(DataTypes.createStructField(field.getName(), DataTypes.LongType, true));
+                    break;
                 case "java.lang.Double":
+                    structFields.add(DataTypes.createStructField(field.getName(), DataTypes.DoubleType, true));
+                    break;
+                case "double":
                     structFields.add(DataTypes.createStructField(field.getName(), DataTypes.DoubleType, true));
                     break;
             }
