@@ -3,32 +3,56 @@ package com.ibeifeng.sparkproject.spark.test.pojo;
 
 public class PaymentList {
 
-  private long id;
+  private Long id;
   private java.sql.Timestamp createTime;
-  private long isDelete;
+  private Long isDelete;
   private String remark;
   private java.sql.Timestamp updateTime;
-  private double amount;
+  private Double amount;
   private String orderType;
   private String outTradeNo;
   private String paySerialNumber;
   private String paySuccess;
   private String payType;
-  private long companyId;
-  private long payUser;
+  private Long companyId;
+  private Long payUser;
   private java.sql.Timestamp payTime;
   private String refund;
   private java.sql.Timestamp refundTime;
-  private double serviceFee;
+  private Double serviceFee;
   private String payBillNo;
   private String tpayType;
 
+  @Override
+  public String toString() {
+    return "PaymentList{" +
+            "id=" + id +
+            ", createTime=" + createTime +
+            ", isDelete=" + isDelete +
+            ", remark='" + remark + '\'' +
+            ", updateTime=" + updateTime +
+            ", amount=" + amount +
+            ", orderType='" + orderType + '\'' +
+            ", outTradeNo='" + outTradeNo + '\'' +
+            ", paySerialNumber='" + paySerialNumber + '\'' +
+            ", paySuccess='" + paySuccess + '\'' +
+            ", payType='" + payType + '\'' +
+            ", companyId=" + companyId +
+            ", payUser=" + payUser +
+            ", payTime=" + payTime +
+            ", refund='" + refund + '\'' +
+            ", refundTime=" + refundTime +
+            ", serviceFee=" + serviceFee +
+            ", payBillNo='" + payBillNo + '\'' +
+            ", tpayType='" + tpayType + '\'' +
+            '}';
+  }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -42,11 +66,11 @@ public class PaymentList {
   }
 
 
-  public long getIsDelete() {
+  public Long getIsDelete() {
     return isDelete;
   }
 
-  public void setIsDelete(long isDelete) {
+  public void setIsDelete(Long isDelete) {
     this.isDelete = isDelete;
   }
 
@@ -69,11 +93,11 @@ public class PaymentList {
   }
 
 
-  public double getAmount() {
+  public Double getAmount() {
     return amount;
   }
 
-  public void setAmount(double amount) {
+  public void setAmount(Double amount) {
     this.amount = amount;
   }
 
@@ -123,20 +147,20 @@ public class PaymentList {
   }
 
 
-  public long getCompanyId() {
+  public Long getCompanyId() {
     return companyId;
   }
 
-  public void setCompanyId(long companyId) {
+  public void setCompanyId(Long companyId) {
     this.companyId = companyId;
   }
 
 
-  public long getPayUser() {
+  public Long getPayUser() {
     return payUser;
   }
 
-  public void setPayUser(long payUser) {
+  public void setPayUser(Long payUser) {
     this.payUser = payUser;
   }
 
@@ -168,11 +192,11 @@ public class PaymentList {
   }
 
 
-  public double getServiceFee() {
+  public Double getServiceFee() {
     return serviceFee;
   }
 
-  public void setServiceFee(double serviceFee) {
+  public void setServiceFee(Double serviceFee) {
     this.serviceFee = serviceFee;
   }
 

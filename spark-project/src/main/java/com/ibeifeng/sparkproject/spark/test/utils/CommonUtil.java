@@ -7,9 +7,7 @@ import org.apache.spark.sql.types.StructField;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CommonUtil {
@@ -77,6 +75,13 @@ public class CommonUtil {
                         objects[i] = 0;
                     }
                     break;
+                case "int":
+                    try {
+                        objects[i] = Integer.parseInt(splited[i].toString());
+                    } catch (Exception e) {
+                        objects[i] = 0;
+                    }
+                    break;
                 case "java.sql.Timestamp":
                     try {
                         Timestamp timestamp = Timestamp.valueOf(splited[i].toString().replaceAll("/", "-"));
@@ -92,6 +97,13 @@ public class CommonUtil {
                         objects[i] = 0L;
                     }
                     break;
+                case "long":
+                    try {
+                        objects[i] = Long.parseLong(splited[i].toString());
+                    } catch (Exception e) {
+                        objects[i] = 0L;
+                    }
+                    break;
                 case "java.lang.Double":
                     try {
                         objects[i] = Double.parseDouble(splited[i].toString());
@@ -100,7 +112,22 @@ public class CommonUtil {
                         objects[i] = 0d;
                     }
                     break;
+                case "double":
+                    try {
+                        objects[i] = Double.parseDouble(splited[i].toString());
+
+                    } catch (Exception e) {
+                        objects[i] = 0d;
+                    }
+                    break;
                 case "java.lang.Boolean":
+                    try {
+                        objects[i] = Boolean.parseBoolean(splited[i].toString());
+                    } catch (Exception e) {
+                        objects[i] = true;
+                    }
+                    break;
+                case "boolean":
                     try {
                         objects[i] = Boolean.parseBoolean(splited[i].toString());
                     } catch (Exception e) {
@@ -124,6 +151,9 @@ public class CommonUtil {
         String[] split = s.split(",");
         Object[] arr = getRowArrByClazz(split, AppUser2.class);
         SparkUtil.printArray(arr);
+        List<StructField> structFieldList = getStructFieldList(AppUser2.class);
+        System.out.println("structFieldList = " + structFieldList);
+        
        /* Object[] objects = new Object[]{"2"};
         long l = Long.parseLong("83");
         objects[0] = l;

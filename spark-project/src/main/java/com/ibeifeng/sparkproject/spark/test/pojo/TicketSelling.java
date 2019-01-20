@@ -3,16 +3,16 @@ package com.ibeifeng.sparkproject.spark.test.pojo;
 
 public class TicketSelling {
 
-  private long id;
+  private Long id;
   private java.sql.Timestamp createTime;
-  private long isDelete;
+  private Long isDelete;
   private String remark;
   private java.sql.Timestamp updateTime;
   private String bookLogId;
   private String carModel;
   private String count;
   private String endSiteName;
-  private double money;
+  private Double money;
   private String pay;
   private String paySerialNumber;
   private String phone;
@@ -24,39 +24,91 @@ public class TicketSelling {
   private String status;
   private String ticketCode;
   private String ticketPerson;
-  private long orderManId;
-  private double actualMoney;
-  private double refundMoney;
+  private Long orderManId;
+  private Double actualMoney;
+  private Double refundMoney;
   private java.sql.Timestamp refundTime;
   private String debusCoordinate;
   private String endCoordinate;
-  private double giveDistance;
-  private double givePrice;
-  private double pickDistance;
-  private double pickPrice;
+  private Double giveDistance;
+  private Double givePrice;
+  private Double pickDistance;
+  private Double pickPrice;
   private String startCoordinate;
   private String takeCoordinate;
-  private double totalMoney;
+  private Double totalMoney;
   private String type;
   private String buyInsurance;
-  private double insuranceAmount;
+  private Double insuranceAmount;
   private String debusPlace;
   private String takePlace;
-  private double price;
-  private double serviceFee;
-  private long groupId;
+  private Double price;
+  private Double serviceFee;
+  private Long groupId;
   private String scheduleCode;
   private String orderType;
   private String tpayType;
   private String payBillNo;
   private String outTradeNo;
 
+  @Override
+  public String toString() {
+    return "TicketSelling{" +
+            "id=" + id +
+            ", createTime=" + createTime +
+            ", isDelete=" + isDelete +
+            ", remark='" + remark + '\'' +
+            ", updateTime=" + updateTime +
+            ", bookLogId='" + bookLogId + '\'' +
+            ", carModel='" + carModel + '\'' +
+            ", count='" + count + '\'' +
+            ", endSiteName='" + endSiteName + '\'' +
+            ", money=" + money +
+            ", pay='" + pay + '\'' +
+            ", paySerialNumber='" + paySerialNumber + '\'' +
+            ", phone='" + phone + '\'' +
+            ", qrCode='" + qrCode + '\'' +
+            ", scanQrCode='" + scanQrCode + '\'' +
+            ", serialNumber='" + serialNumber + '\'' +
+            ", setOutTime=" + setOutTime +
+            ", startSiteName='" + startSiteName + '\'' +
+            ", status='" + status + '\'' +
+            ", ticketCode='" + ticketCode + '\'' +
+            ", ticketPerson='" + ticketPerson + '\'' +
+            ", orderManId=" + orderManId +
+            ", actualMoney=" + actualMoney +
+            ", refundMoney=" + refundMoney +
+            ", refundTime=" + refundTime +
+            ", debusCoordinate='" + debusCoordinate + '\'' +
+            ", endCoordinate='" + endCoordinate + '\'' +
+            ", giveDistance=" + giveDistance +
+            ", givePrice=" + givePrice +
+            ", pickDistance=" + pickDistance +
+            ", pickPrice=" + pickPrice +
+            ", startCoordinate='" + startCoordinate + '\'' +
+            ", takeCoordinate='" + takeCoordinate + '\'' +
+            ", totalMoney=" + totalMoney +
+            ", type='" + type + '\'' +
+            ", buyInsurance='" + buyInsurance + '\'' +
+            ", insuranceAmount=" + insuranceAmount +
+            ", debusPlace='" + debusPlace + '\'' +
+            ", takePlace='" + takePlace + '\'' +
+            ", price=" + price +
+            ", serviceFee=" + serviceFee +
+            ", groupId=" + groupId +
+            ", scheduleCode='" + scheduleCode + '\'' +
+            ", orderType='" + orderType + '\'' +
+            ", tpayType='" + tpayType + '\'' +
+            ", payBillNo='" + payBillNo + '\'' +
+            ", outTradeNo='" + outTradeNo + '\'' +
+            '}';
+  }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -70,11 +122,11 @@ public class TicketSelling {
   }
 
 
-  public long getIsDelete() {
+  public Long getIsDelete() {
     return isDelete;
   }
 
-  public void setIsDelete(long isDelete) {
+  public void setIsDelete(Long isDelete) {
     this.isDelete = isDelete;
   }
 
@@ -133,11 +185,11 @@ public class TicketSelling {
   }
 
 
-  public double getMoney() {
+  public Double getMoney() {
     return money;
   }
 
-  public void setMoney(double money) {
+  public void setMoney(Double money) {
     this.money = money;
   }
 
@@ -241,29 +293,29 @@ public class TicketSelling {
   }
 
 
-  public long getOrderManId() {
+  public Long getOrderManId() {
     return orderManId;
   }
 
-  public void setOrderManId(long orderManId) {
+  public void setOrderManId(Long orderManId) {
     this.orderManId = orderManId;
   }
 
 
-  public double getActualMoney() {
+  public Double getActualMoney() {
     return actualMoney;
   }
 
-  public void setActualMoney(double actualMoney) {
+  public void setActualMoney(Double actualMoney) {
     this.actualMoney = actualMoney;
   }
 
 
-  public double getRefundMoney() {
+  public Double getRefundMoney() {
     return refundMoney;
   }
 
-  public void setRefundMoney(double refundMoney) {
+  public void setRefundMoney(Double refundMoney) {
     this.refundMoney = refundMoney;
   }
 
@@ -295,38 +347,38 @@ public class TicketSelling {
   }
 
 
-  public double getGiveDistance() {
+  public Double getGiveDistance() {
     return giveDistance;
   }
 
-  public void setGiveDistance(double giveDistance) {
+  public void setGiveDistance(Double giveDistance) {
     this.giveDistance = giveDistance;
   }
 
 
-  public double getGivePrice() {
+  public Double getGivePrice() {
     return givePrice;
   }
 
-  public void setGivePrice(double givePrice) {
+  public void setGivePrice(Double givePrice) {
     this.givePrice = givePrice;
   }
 
 
-  public double getPickDistance() {
+  public Double getPickDistance() {
     return pickDistance;
   }
 
-  public void setPickDistance(double pickDistance) {
+  public void setPickDistance(Double pickDistance) {
     this.pickDistance = pickDistance;
   }
 
 
-  public double getPickPrice() {
+  public Double getPickPrice() {
     return pickPrice;
   }
 
-  public void setPickPrice(double pickPrice) {
+  public void setPickPrice(Double pickPrice) {
     this.pickPrice = pickPrice;
   }
 
@@ -349,11 +401,11 @@ public class TicketSelling {
   }
 
 
-  public double getTotalMoney() {
+  public Double getTotalMoney() {
     return totalMoney;
   }
 
-  public void setTotalMoney(double totalMoney) {
+  public void setTotalMoney(Double totalMoney) {
     this.totalMoney = totalMoney;
   }
 
@@ -376,11 +428,11 @@ public class TicketSelling {
   }
 
 
-  public double getInsuranceAmount() {
+  public Double getInsuranceAmount() {
     return insuranceAmount;
   }
 
-  public void setInsuranceAmount(double insuranceAmount) {
+  public void setInsuranceAmount(Double insuranceAmount) {
     this.insuranceAmount = insuranceAmount;
   }
 
@@ -403,29 +455,29 @@ public class TicketSelling {
   }
 
 
-  public double getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(double price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 
 
-  public double getServiceFee() {
+  public Double getServiceFee() {
     return serviceFee;
   }
 
-  public void setServiceFee(double serviceFee) {
+  public void setServiceFee(Double serviceFee) {
     this.serviceFee = serviceFee;
   }
 
 
-  public long getGroupId() {
+  public Long getGroupId() {
     return groupId;
   }
 
-  public void setGroupId(long groupId) {
+  public void setGroupId(Long groupId) {
     this.groupId = groupId;
   }
 

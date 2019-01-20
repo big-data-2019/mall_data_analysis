@@ -2,9 +2,9 @@ package com.ibeifeng.sparkproject.spark.test.pojo;
 
 public class AppUser2 {
 
-  private long id;
+  private Long id;
   private java.sql.Timestamp createTime;
-  private long isDelete;
+  private Long isDelete;
   private String remark;
   private java.sql.Timestamp updateTime;
   private String headPortrait;
@@ -13,22 +13,47 @@ public class AppUser2 {
   private String rongyunToken;
   private String sex;
   private String token;
-  private long baseUserId;
-  private long userIntegral;
+  private Long baseUserId;
+  private Long userIntegral;
   private String weixinOpenId;
   private String recommendCode;
-  private long payNum;
+  private Long payNum;
   private String status;
-  private long companyId;
+  private Long companyId;
   private String inviteCode;
-  private long busIntegralId;
+  private Long busIntegralId;
 
+    @Override
+    public String toString() {
+        return "AppUser2{" +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", isDelete=" + isDelete +
+                ", remark='" + remark + '\'' +
+                ", updateTime=" + updateTime +
+                ", headPortrait='" + headPortrait + '\'' +
+                ", identificationCards='" + identificationCards + '\'' +
+                ", realName='" + realName + '\'' +
+                ", rongyunToken='" + rongyunToken + '\'' +
+                ", sex='" + sex + '\'' +
+                ", token='" + token + '\'' +
+                ", baseUserId=" + baseUserId +
+                ", userIntegral=" + userIntegral +
+                ", weixinOpenId='" + weixinOpenId + '\'' +
+                ", recommendCode='" + recommendCode + '\'' +
+                ", payNum=" + payNum +
+                ", status='" + status + '\'' +
+                ", companyId=" + companyId +
+                ", inviteCode='" + inviteCode + '\'' +
+                ", busIntegralId=" + busIntegralId +
+                '}';
+    }
 
-  public long getId() {
+    public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -42,11 +67,11 @@ public class AppUser2 {
   }
 
 
-  public long getIsDelete() {
+  public Long getIsDelete() {
     return isDelete;
   }
 
-  public void setIsDelete(long isDelete) {
+  public void setIsDelete(Long isDelete) {
     this.isDelete = isDelete;
   }
 
@@ -123,20 +148,20 @@ public class AppUser2 {
   }
 
 
-  public long getBaseUserId() {
+  public Long getBaseUserId() {
     return baseUserId;
   }
 
-  public void setBaseUserId(long baseUserId) {
+  public void setBaseUserId(Long baseUserId) {
     this.baseUserId = baseUserId;
   }
 
 
-  public long getUserIntegral() {
+  public Long getUserIntegral() {
     return userIntegral;
   }
 
-  public void setUserIntegral(long userIntegral) {
+  public void setUserIntegral(Long userIntegral) {
     this.userIntegral = userIntegral;
   }
 
@@ -159,11 +184,11 @@ public class AppUser2 {
   }
 
 
-  public long getPayNum() {
+  public Long getPayNum() {
     return payNum;
   }
 
-  public void setPayNum(long payNum) {
+  public void setPayNum(Long payNum) {
     this.payNum = payNum;
   }
 
@@ -177,11 +202,11 @@ public class AppUser2 {
   }
 
 
-  public long getCompanyId() {
+  public Long getCompanyId() {
     return companyId;
   }
 
-  public void setCompanyId(long companyId) {
+  public void setCompanyId(Long companyId) {
     this.companyId = companyId;
   }
 
@@ -195,11 +220,11 @@ public class AppUser2 {
   }
 
 
-  public long getBusIntegralId() {
+  public Long getBusIntegralId() {
     return busIntegralId;
   }
 
-  public void setBusIntegralId(long busIntegralId) {
+  public void setBusIntegralId(Long busIntegralId) {
     this.busIntegralId = busIntegralId;
   }
 
